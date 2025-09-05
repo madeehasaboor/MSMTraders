@@ -1,0 +1,25 @@
+{
+  "name": "e_commerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.14.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "brunch": "^4.0.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.12"
+  }
+}
