@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initScrollAnimations();
     initCartFunctionality();
+    initImageErrorHandling();
 });
 
 // Banner Slider with Fade Effect
@@ -393,3 +394,75 @@ function debounce(func, wait) {
 window.addEventListener('scroll', debounce(() => {
     // Handle scroll events here
 }, 100));
+
+// Image Error Handling and Visibility
+function initImageErrorHandling() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+        // Ensure image is visible
+        img.style.display = 'block';
+        img.style.opacity = '1';
+        img.style.visibility = 'visible';
+        
+        // Handle image load errors
+        img.addEventListener('error', function() {
+            console.warn('Image failed to load:', this.src);
+            
+            // Create a placeholder div
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.style.cssText = `
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #9ca3af;
+                font-size: 14px;
+                border-radius: 8px;
+                min-height: 100px;
+            `;
+            placeholder.textContent = 'Image not available';
+            
+            // Replace the broken image with placeholder
+            this.parentNode.replaceChild(placeholder, this);
+        });
+        
+        // Handle successful image load
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+            this.style.visibility = 'visible';
+        });
+        
+        // Preload images for better performance
+        if (img.src && img.src !== '') {
+            const preloadImg = new Image();
+            preloadImg.src = img.src;
+        }
+    });
+    
+    // Lazy loading for better performance
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        // Observe all images for lazy loading
+        images.forEach(img => {
+            if (img.dataset.src) {
+                imageObserver.observe(img);
+            }
+        });
+    }
+}
