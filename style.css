@@ -158,11 +158,30 @@ aside nav a:hover::before {
 
 /* Image Visibility and Error Handling */
 img {
-    display: block;
+    display: block !important;
     max-width: 100%;
     height: auto;
     object-fit: cover;
     object-position: center;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.3s ease;
+}
+
+/* Ensure all image containers have proper dimensions */
+.banner-slide img,
+.product-card img,
+img[src*="perfumes"],
+img[src*="house_care"],
+img[src*="crockery"],
+img[src*="slide show"] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* Loading Animation for Images */
