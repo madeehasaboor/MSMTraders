@@ -156,6 +156,15 @@ aside nav a:hover::before {
 
 /* Mobile Responsive Adjustments - DISABLED FOR DESKTOP-ONLY VIEW */
 
+/* Image Visibility and Error Handling */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
 /* Loading Animation for Images */
 .product-card img {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -175,6 +184,26 @@ aside nav a:hover::before {
 .product-card img[src] {
     animation: none;
     background: none;
+}
+
+/* Ensure all images are visible */
+img[src] {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Fallback for broken images */
+img[src=""], img:not([src]) {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+img[src=""]:before, img:not([src]):before {
+    content: "Image not found";
 }
 
 /* Smooth Scrolling */
